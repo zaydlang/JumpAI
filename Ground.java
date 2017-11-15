@@ -26,15 +26,15 @@ public class Ground extends Machine {
       yIntercept = y1 - getSlope() * x1;
    }
 
-   public boolean intersects(Ball other) {
-      if (getDistance(other) < other.getRadius()) return true;
+   public boolean intersects(Ball other, double width, double height) {
+      if (getDistance(other, width, height) < other.getRadius()) return true;
       return false;
    }
   //0 700 1200 550
    //public boolean intersects(Machine other) { return false; }
 
    public double getSlope() {
-      return ((y2 - y1) / (x2 - x1));
+      return -((y2 - y1) / (x2 - x1));
    }
 
    public double xToY(double x) {
@@ -65,12 +65,20 @@ public class Ground extends Machine {
       return "ground";
    }
    
-   public double getDistance(Machine other) {
-      double slope = getSlope();
-      double angleOfGround = (Math.toDegrees(Math.tan(slope)) - 90;
-      double x = (-Math.atan(Math.toRadians(angleOfGround)) - other.getY() + (slope * other.GetX()) - y2) / (1 - slope);
+   public double getDistance(Machine other, double width, double height) {
+      /*double gSlope = getSlope();
+      double bSlope = -1/gSlope;
+      double x = ((-bSlope * other.getX()) + other.getY() - y1) / (gSlope - bSlope);
       double y = xToY(x);
-      double d = Math.pow(Math.pow(((x - other.getX()) / 2) - other.getX(), 2) + Math.pow(((y - other.getY()) / 2) - other.getY(), 2), 0.5);
+      double d = Math.pow(Math.pow(x - other.getX(), 2) + Math.pow(y - other.getY(), 2), 0.5);
+      System.out.println("X: " + x + " Y: " + y + " D: " + d);
+      System.out.println("g: " + gSlope + " b: " + bSlope);*/
+      double a = -getSlope();
+      double b = 1;
+      double c = height - yIntercept;
+      double d = (Math.abs(a * other.getX() + b * (height - other.getY()) + c))/(Math.pow(Math.pow(a, 2) + Math.pow(b, 2), 0.5));
+
+      System.out.println(a + " " + b + " " + c + " " + other.getX() + " " + other.getY() + " " + d);
       return d;
    }
 }

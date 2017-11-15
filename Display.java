@@ -9,13 +9,13 @@ import java.io.*;
 
 import java.awt.geom.*;
 
-public class Display extends JFrame implements ActionListener {
+public class Display extends JPanel implements ActionListener {
    private final Font font         = new Font("Roboto", Font.BOLD, 48);
    private final int width         = 1200;
    private final int height        = 800;
    private final int groundHeightL = 100;
    private final int groundHeightR = 350;
-   private final Timer timer       = new Timer(0, this);
+   private final Timer timer       = new Timer(1, this);
 
    private Physics ph;
 
@@ -23,9 +23,10 @@ public class Display extends JFrame implements ActionListener {
    private Ground gr = new Ground(0, height - groundHeightL, width, height - groundHeightR);
 
    public Display() {
-      setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       
-      setSize(width, height);
+      setSize(new Dimension(width, height)); 
+      setPreferredSize(new Dimension(width, height));
       setLayout(null); 
 
       // Create display for Generation Number
@@ -46,8 +47,10 @@ public class Display extends JFrame implements ActionListener {
    }
 
    public void paint(Graphics g) {
-      super.paint(g);
+      g.setColor(Color.WHITE);
+      g.fillRect(0, 0, width, height);
 
+      g.setColor(Color.BLACK);
       // Draw Ground
       gr.draw(g);
 
@@ -56,6 +59,8 @@ public class Display extends JFrame implements ActionListener {
 
       // Draw Machine
       mach.draw(g, width);
+
+      repaint();
    }
  
    public void updatePhysics() {
@@ -72,6 +77,17 @@ public class Display extends JFrame implements ActionListener {
    }
 
    public static void main(String[] args) {
-      new Display();
+      Display disp = new Display();
+
+      JFrame frame = new JFrame();
+      frame.setTitle("Physics");
+      frame.add(disp);
+      frame.pack();
+      frame.setResizable(false);
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.setLocationRelativeTo(null);
+      frame.setVisible(true);
+
+      //new Display();
    }
 }

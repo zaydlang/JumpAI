@@ -12,7 +12,7 @@ import java.awt.geom.Ellipse2D.Double;
 import java.lang.Math.*;
 
 public class Physics {
-   private final double gravity      = 0.02;
+   private final double gravity      = 0.0001;
    private final double staticF      = 0.5;
    private final double dynamicF     = 0.3;
    private final double restitution  = 0.7;
@@ -62,7 +62,7 @@ public class Physics {
 
       //System.out.println(gr.xToY(m.getX()));
 
-      if (gr.intersects(m)) {
+      if (gr.intersects(m, width, height)) {
          //System.out.print("Collision: " + x + ", " + y + " : " + xVel + ", " + yVel);
          //System.out.println(m.getX() + ", " + m.getY());
          double angleOfCollision = Math.toDegrees(m.getAngle());
