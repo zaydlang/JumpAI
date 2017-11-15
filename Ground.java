@@ -27,7 +27,7 @@ public class Ground extends Machine {
    }
 
    public boolean intersects(Ball other) {
-      if (other.getY() > xToY(x2 - other.getX())) return true;
+      if (getDistance(other) < other.getRadius()) return true;
       return false;
    }
   //0 700 1200 550
@@ -38,7 +38,7 @@ public class Ground extends Machine {
    }
 
    public double xToY(double x) {
-      return (((y2 - y1) / (x2 - x1)) * x) + yIntercept; 
+      return (((y2 - y1) / (x2 - x1)) * (x2 - x)) + yIntercept; 
    }
 
    public void draw(Graphics g) {
@@ -62,6 +62,15 @@ public class Ground extends Machine {
    } 
 
    public String getType() {
-       return "ground";
+      return "ground";
+   }
+   
+   public double getDistance(Machine other) {
+      double slope = getSlope();
+      double angleOfGround = (Math.toDegrees(Math.tan(slope)) - 90;
+      double x = (-Math.atan(Math.toRadians(angleOfGround)) - other.getY() + (slope * other.GetX()) - y2) / (1 - slope);
+      double y = xToY(x);
+      double d = Math.pow(Math.pow(((x - other.getX()) / 2) - other.getX(), 2) + Math.pow(((y - other.getY()) / 2) - other.getY(), 2), 0.5);
+      return d;
    }
 }

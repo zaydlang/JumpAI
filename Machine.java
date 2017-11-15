@@ -23,7 +23,7 @@ public class Machine {
    }
 
    public double getAngle() {
-      double angle = Math.toDegrees(Math.atan(yVel/xVel));
+      double angle = (Math.atan(yVel/xVel));
       if (xVel < 0) angle += 180;
       return angle;
    }

@@ -15,7 +15,7 @@ public class Display extends JFrame implements ActionListener {
    private final int height        = 800;
    private final int groundHeightL = 100;
    private final int groundHeightR = 350;
-   private final Timer timer       = new Timer(1, this);
+   private final Timer timer       = new Timer(0, this);
 
    private Physics ph;
 
@@ -23,6 +23,8 @@ public class Display extends JFrame implements ActionListener {
    private Ground gr = new Ground(0, height - groundHeightL, width, height - groundHeightR);
 
    public Display() {
+      setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      
       setSize(width, height);
       setLayout(null); 
 

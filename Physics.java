@@ -12,7 +12,7 @@ import java.awt.geom.Ellipse2D.Double;
 import java.lang.Math.*;
 
 public class Physics {
-   private final double gravity      = 0.001;
+   private final double gravity      = 0.02;
    private final double staticF      = 0.5;
    private final double dynamicF     = 0.3;
    private final double restitution  = 0.7;
@@ -30,19 +30,27 @@ public class Physics {
    }
 
    public void updatePosition(Ball m) {
+      if (m.getX() < 0) {
+         m = new Ball(600, 300, 0, 0, 30);
+      }
+      
       double x    = m.getX();
       double y    = m.getY();
       double xVel = m.getXVel();
       double yVel = m.getYVel();
 
+      double oldY = y;
+      
       if (x > width) {
          x = width;
          xVel *= dynamicF * (restitution - 1) * yVel;
+         if (xVel < width) xVel *= -1;
       }
 
       if (x < 0) { 
          x = 0;
          xVel *= dynamicF * (restitution - 1) * yVel;
+         if (xVel > 0) xVel *= -1;
       }
 
       // Update Machine
@@ -55,10 +63,11 @@ public class Physics {
       //System.out.println(gr.xToY(m.getX()));
 
       if (gr.intersects(m)) {
+         //System.out.print("Collision: " + x + ", " + y + " : " + xVel + ", " + yVel);
          //System.out.println(m.getX() + ", " + m.getY());
-         double angleOfCollision = m.getAngle();
+         double angleOfCollision = Math.toDegrees(m.getAngle());
          double angleOfGround = -Math.toDegrees(Math.atan(gr.getSlope()));
-         double newAngle = 180 + (2 * angleOfGround) - angleOfCollision;
+         double newAngle = 90 + (2 * angleOfGround) - angleOfCollision;
 
          //System.out.println(angleOfCollision + ", " + angleOfGround  + " => " + newAngle);
 
@@ -70,19 +79,22 @@ public class Physics {
             xVel += dynamicF * (restitution - 1) * yVel;
             if (xVel < 0) xVel = 0;
          } else if (xVel < 0) {
-	    xVel += dynamicF * (restitution - 1) * yVel;
+	         xVel += dynamicF * (restitution - 1) * yVel;
             if (xVel >= 0) xVel = 0;
          }
 
          yVel *= -restitution;
 
          double totalVel = Math.pow(Math.pow(yVel, 2) + Math.pow(xVel, 2), 0.5);
-         yVel = totalVel * Math.sin(newAngle);
-         xVel = totalVel * Math.cos(newAngle);
+         //System.out.println(Math.sin(newAngle));
+         //System.out.println(Math.cos(newAngle));
+         yVel = totalVel * -Math.sin(Math.toRadians(newAngle));
+         xVel = totalVel * Math.cos(Math.toRadians(newAngle));
+         if (Math.abs(oldY - y) > 1) System.out.println("VEL TOO BIG!!!" + yVel);  
       } else {
          yVel -= gravity;
       }
-
+       
       // Update Machine
       m.setXVel(xVel);
       m.setYVel(yVel);
