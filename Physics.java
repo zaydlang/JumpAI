@@ -12,7 +12,7 @@ import java.awt.geom.Ellipse2D.Double;
 import java.lang.Math.*;
 
 public class Physics {
-   private final double gravity      = 0.0001;
+   private final double gravity      = 0.001;
    private final double staticF      = 0.5;
    private final double dynamicF     = 0.3;
    private final double restitution  = 0.7;
@@ -88,8 +88,9 @@ public class Physics {
          double totalVel = Math.pow(Math.pow(yVel, 2) + Math.pow(xVel, 2), 0.5);
          //System.out.println(Math.sin(newAngle));
          //System.out.println(Math.cos(newAngle));
-         yVel = totalVel * -Math.sin(Math.toRadians(newAngle));
+         yVel = totalVel * Math.sin(Math.toRadians(newAngle));
          xVel = totalVel * Math.cos(Math.toRadians(newAngle));
+         //System.out.println("VEL: " + xVel + " " + yVel);
          if (Math.abs(oldY - y) > 1) System.out.println("VEL TOO BIG!!!" + yVel);  
       } else {
          yVel -= gravity;
@@ -110,6 +111,8 @@ public class Physics {
       x -= xVel;
       y -= yVel;
       //System.out.println(y);
+      
+      System.out.println("X: " + x + " Y: " + y);
       m.setPos(x, y);
    }
 }

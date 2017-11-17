@@ -27,6 +27,7 @@ public class Ground extends Machine {
    }
 
    public boolean intersects(Ball other, double width, double height) {
+      // return (xToY(other.getX()) < (other.getY()));
       if (getDistance(other, width, height) < other.getRadius()) return true;
       return false;
    }
@@ -75,10 +76,10 @@ public class Ground extends Machine {
       System.out.println("g: " + gSlope + " b: " + bSlope);*/
       double a = -getSlope();
       double b = 1;
-      double c = height - yIntercept;
-      double d = (Math.abs(a * other.getX() + b * (height - other.getY()) + c))/(Math.pow(Math.pow(a, 2) + Math.pow(b, 2), 0.5));
+      double c = height - y1;
+      double d = (Math.abs(a * (width - other.getX()) + b * (height - other.getY()) + c))/(Math.pow(Math.pow(a, 2) + Math.pow(b, 2), 0.5));
 
-      System.out.println(a + " " + b + " " + c + " " + other.getX() + " " + other.getY() + " " + d);
+      System.out.println(a + " " + b + " " + c + " " + other.getX() + " " + (height - other.getY()) + " " + d);
       return d;
    }
 }
