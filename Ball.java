@@ -17,6 +17,11 @@ public class Ball extends Machine {
       this.radius = radius;
    }
    
+  public Ball(Ball o) {
+      super(o.getX(), o.getY(), o.getXVel(), o.getYVel());
+      this.radius = o.getRadius();
+   }
+
    /*public int xToYLower(double x) {
       x += getX();
       return m.getY() - Math.pow(Math.pow(radius, 2) - Math.pow(x, 2));

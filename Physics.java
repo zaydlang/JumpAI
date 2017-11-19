@@ -9,10 +9,11 @@ import java.io.*;
 
 import java.awt.geom.Ellipse2D.Double;
 
+import java.lang.*;
 import java.lang.Math.*;
 
 public class Physics {
-   private final double gravity      = 0.001;
+   private final double gravity      = 0.0001;
    private final double staticF      = 0.5;
    private final double dynamicF     = 0.3;
    private final double restitution  = 0.7;
@@ -29,7 +30,10 @@ public class Physics {
       this.gr = g;
    }
 
-   public void updatePosition(Ball m) {
+   public boolean updatePosition(Ball m) {
+      System.out.println( (test.checkNaN(m.getX())) );
+      if (test.checkNaN(m.getX())) return false;
+
       if (m.getX() < 0) {
          m = new Ball(600, 300, 0, 0, 30);
       }
@@ -72,7 +76,7 @@ public class Physics {
          //System.out.println(angleOfCollision + ", " + angleOfGround  + " => " + newAngle);
 
          //System.out.print(y);
-         y = gr.xToY(x);
+         //y = gr.xToY(x);
          //System.out.println(" -> " + y);
 
          if (xVel > 0) {
@@ -102,6 +106,7 @@ public class Physics {
 
       // Convert velocities to positions
       velToPos(x, y, xVel, yVel, m);
+      return true;
    } 
 
    // Converts velocities to positions
@@ -112,7 +117,7 @@ public class Physics {
       y -= yVel;
       //System.out.println(y);
       
-      System.out.println("X: " + x + " Y: " + y);
+      //System.out.println("X: " + x + " Y: " + y);
       m.setPos(x, y);
    }
 }

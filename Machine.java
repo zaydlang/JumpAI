@@ -22,6 +22,13 @@ public class Machine {
       this.yVel = yVel;
    }
 
+   public Machine(Machine o) {
+      this.x    = o.getX();
+      this.y    = o.getY();
+      this.xVel = o.getXVel();
+      this.yVel = o.getYVel();
+   }
+
    public double getAngle() {
       double angle = (Math.atan(yVel/xVel));
       if (xVel < 0) angle += 180;

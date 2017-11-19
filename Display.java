@@ -16,21 +16,25 @@ public class Display extends JPanel implements ActionListener {
    private final int groundHeightL = 100;
    private final int groundHeightR = 350;
    private final Timer timer       = new Timer(1, this);
+   private final Ball machConst = new Ball(0, 0, 0, 0, 30);
 
    private Physics ph;
-
-   private Ball mach = new Ball(600, 300, 0, 0, 30);
    private Ground gr = new Ground(0, height - groundHeightL, width, height - groundHeightR);
+   private Ball mach;
+
+   private JLabel genDisplay;
+
+   private int generation = 1;
 
    public Display() {
       //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       
       setSize(new Dimension(width, height)); 
       setPreferredSize(new Dimension(width, height));
-      setLayout(null); 
+      setLayout(null);
 
       // Create display for Generation Number
-      JLabel genDisplay = new JLabel("Generation: ");
+      genDisplay = new JLabel("Generation: " + generation);
       genDisplay.setBounds(0, 0, width, height / 8);
       genDisplay.setFont(font);
       genDisplay.setHorizontalTextPosition(JLabel.LEFT);
@@ -42,7 +46,7 @@ public class Display extends JPanel implements ActionListener {
      
       // Start refresh timer
       timer.start();
-
+      mach = new Ball(machConst);
       setVisible(true); 
    }
 
@@ -51,11 +55,21 @@ public class Display extends JPanel implements ActionListener {
       g.fillRect(0, 0, width, height);
 
       g.setColor(Color.BLACK);
+    
+      // Draw Generation #
+      g.setFont(font);
+      g.drawString("Generation: " + generation, 20, 50);
+
       // Draw Ground
       gr.draw(g);
 
       // Update all the positions of the objects based on the current physics.
-      updatePhysics();
+      if (!updatePhysics()) {
+         mach = machConst;
+         generation++;
+         repaint();
+         return;
+      }
 
       // Draw Machine
       mach.draw(g, width);
@@ -63,8 +77,8 @@ public class Display extends JPanel implements ActionListener {
       repaint();
    }
  
-   public void updatePhysics() {
-      ph.updatePosition(mach);
+   public boolean updatePhysics() {
+      return ph.updatePosition(mach);
    }
 
    public void setPhysics(Physics p) {
@@ -73,7 +87,7 @@ public class Display extends JPanel implements ActionListener {
 
    @Override
    public void actionPerformed(ActionEvent e) {
-      this.repaint();
+      //this.repaint();
    }
 
    public static void main(String[] args) {
