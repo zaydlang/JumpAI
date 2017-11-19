@@ -27,8 +27,11 @@ public class Ball extends Machine {
       return m.getY() - Math.pow(Math.pow(radius, 2) - Math.pow(x, 2));
    }*/
  
-   public void draw(Graphics g, int width) {
-      g.drawOval((width - (int)getX() - (int)radius/2), (int)getY() - ((int)radius * 2), (int)radius * 2, (int)radius * 2);
+   public void draw(Graphics g, int width, int height) {
+      g.fillOval(((int)getX() - (int)radius), 
+                 (height - (int)getY() - (int)radius), 
+                 (int)radius * 2, 
+                 (int)radius * 2);
    }
 
    public double getRadius() {

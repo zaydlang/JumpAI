@@ -77,8 +77,8 @@ public class Ground extends Machine {
       System.out.println("g: " + gSlope + " b: " + bSlope);*/
       double a = -getSlope();
       double b = 1;
-      double c = - height + y1 + other.getRadius();
-      double d = (Math.abs(a * (width - other.getX()) + b * (height - other.getY()) + c))/(Math.pow(Math.pow(a, 2) + Math.pow(b, 2), 0.5));
+      double c = - height + y1;
+      double d = (Math.abs(a * (other.getX()) + b * (other.getY()) + c))/(Math.pow(Math.pow(a, 2) + Math.pow(b, 2), 0.5));
 
       //System.out.println(a + " " + b + " " + c + " " + other.getX() + " " + (height - other.getY()) + " " + d);
       return d;

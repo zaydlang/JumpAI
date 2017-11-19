@@ -16,7 +16,7 @@ public class Display extends JPanel implements ActionListener {
    private final int groundHeightL = 100;
    private final int groundHeightR = 350;
    private final Timer timer       = new Timer(1, this);
-   private final Ball machConst = new Ball(0, 0, 0, 0, 30);
+   private final Ball machConst = new Ball(width / 2, height / 2, 0, 0, 30);
 
    private Physics ph;
    private Ground gr = new Ground(0, height - groundHeightL, width, height - groundHeightR);
@@ -65,14 +65,15 @@ public class Display extends JPanel implements ActionListener {
 
       // Update all the positions of the objects based on the current physics.
       if (!updatePhysics()) {
-         mach = machConst;
+         System.out.println("FUCK");
+         mach = new Ball(machConst);
          generation++;
          repaint();
          return;
       }
 
       // Draw Machine
-      mach.draw(g, width);
+      mach.draw(g, width, height);
 
       repaint();
    }

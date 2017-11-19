@@ -31,12 +31,7 @@ public class Physics {
    }
 
    public boolean updatePosition(Ball m) {
-      System.out.println( (test.checkNaN(m.getX())) );
       if (test.checkNaN(m.getX())) return false;
-
-      if (m.getX() < 0) {
-         m = new Ball(600, 300, 0, 0, 30);
-      }
       
       double x    = m.getX();
       double y    = m.getY();
@@ -44,17 +39,9 @@ public class Physics {
       double yVel = m.getYVel();
 
       double oldY = y;
-      
-      if (x > width) {
-         x = width;
-         xVel *= dynamicF * (restitution - 1) * yVel;
-         if (xVel < width) xVel *= -1;
-      }
-
-      if (x < 0) { 
-         x = 0;
-         xVel *= dynamicF * (restitution - 1) * yVel;
-         if (xVel > 0) xVel *= -1;
+    
+      if (x > width || x < 0) {
+         return false;
       }
 
       // Update Machine
@@ -113,8 +100,8 @@ public class Physics {
    // First Index: X
    // Second Index: Y
    public void velToPos(double x, double y, double xVel, double yVel, Machine m) {
-      x -= xVel;
-      y -= yVel;
+      x += xVel;
+      y += yVel;
       //System.out.println(y);
       
       //System.out.println("X: " + x + " Y: " + y);
