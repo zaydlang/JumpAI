@@ -65,7 +65,6 @@ public class Display extends JPanel implements ActionListener {
 
       // Update all the positions of the objects based on the current physics.
       if (!updatePhysics()) {
-         System.out.println("FUCK");
          mach = new Ball(machConst);
          generation++;
          repaint();
